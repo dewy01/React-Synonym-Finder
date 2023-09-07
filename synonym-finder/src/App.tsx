@@ -23,23 +23,28 @@ function App() {
 
   return (
     <div className='App'>
-      <form onSubmit={handleFetchSynonyms}>
-        <label htmlFor='word-input'>Your Word</label>
-        <input
-          id='word-input'
-          value={word}
-          onChange={(e) => setWord(e.target.value)}
-        />
-        <button>Submit</button>
-      </form>
-      <ul>
-        {synonyms &&
-          synonyms.slice(0, 15).map((synonym, index) => (
-            <li
-            onClick={() => handleSynonymClicked(synonym.word)} 
-            key={index}>{synonym.word}</li>
-          ))}
-      </ul>
+      <div>
+        <h1> Synonym Finder </h1>
+        <form onSubmit={handleFetchSynonyms}>
+          <label htmlFor='word-input'>Your Word</label>
+          <input
+            id='word-input'
+            value={word}
+            onChange={(e) => setWord(e.target.value)}
+          />
+          <button>Search</button>
+        </form>
+      </div>
+      <div>
+        <ul>
+          {synonyms &&
+            synonyms.slice(0, 10).map((synonym, index) => (
+              <li
+              onClick={() => handleSynonymClicked(synonym.word)} 
+              key={index}>{synonym.word}</li>
+            ))}
+        </ul>
+      </div>
     </div>
   );
 }
