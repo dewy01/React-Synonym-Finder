@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import { fetchSynonyms } from './api/fetchData';
 
 type Synonym = {
   word: string;
@@ -12,10 +13,12 @@ function App() {
 
   const handleFetchSynonyms = (e: React.FormEvent) => {
     e.preventDefault();
-    fetch(`https://api.datamuse.com/words?rel_syn=${word}`)
-      .then((response) => response.json())
-      .then(setSynonyms)
-      .catch((error) => console.error('Error fetching synonyms:', error));
+    fetchSynonyms(word).then(setSynonyms);
+  };
+
+  const handleSynonymClicked = (synonym: string) => {
+    setWord(synonym);
+    fetchSynonyms(synonym).then(setSynonyms);
   };
 
   return (
@@ -31,8 +34,10 @@ function App() {
       </form>
       <ul>
         {synonyms &&
-          synonyms.map((synonym, index) => (
-            <li key={index}>{synonym.word}</li>
+          synonyms.slice(0, 15).map((synonym, index) => (
+            <li
+            onClick={() => handleSynonymClicked(synonym.word)} 
+            key={index}>{synonym.word}</li>
           ))}
       </ul>
     </div>
